@@ -2,18 +2,18 @@ import logging
 import string
 import subprocess
 import sys
-from random import choice
 
 import pytest
 from mock import Mock, call
 
 from beer_garden.local_plugins.runner import ProcessRunner
+import secrets
 
 
 @pytest.fixture
 def runner(tmp_path):
     return ProcessRunner(
-        runner_id="".join([choice(string.ascii_letters) for _ in range(10)]),
+        runner_id="".join([secrets.SystemRandom().choice(string.ascii_letters) for _ in range(10)]),
         process_args=["python", "-m", "echo"],
         process_cwd=tmp_path,
         process_env={},

@@ -1,6 +1,5 @@
 # -*- coding: utf-8 -*-
 import logging
-import random
 import string
 from typing import List
 
@@ -13,6 +12,7 @@ from brewtils.schema_parser import SchemaParser
 
 import beer_garden.config as config
 import beer_garden.requests
+import secrets
 
 logger = logging.getLogger(__name__)
 
@@ -76,7 +76,7 @@ def create(instance: Instance, system: System) -> dict:
         [request_queue_name],
     )
 
-    suffix = [random.choice(string.ascii_lowercase + string.digits) for _ in range(10)]
+    suffix = [secrets.SystemRandom().choice(string.ascii_lowercase + string.digits) for _ in range(10)]
     routing_words.append("".join(suffix))
 
     admin_keys = get_routing_keys(*routing_words, is_admin=True)
