@@ -1,5 +1,4 @@
 import logging
-from random import choice
 from string import ascii_letters
 from typing import Any, Dict, Tuple
 
@@ -10,6 +9,7 @@ from brewtils.schema_parser import SchemaParser
 
 import beer_garden.events
 import beer_garden.router
+import secrets
 
 logger = logging.getLogger(__name__)
 
@@ -221,7 +221,7 @@ class Connection:
 
                 self.conn.subscribe(
                     destination=self.subscribe_destination,
-                    id="".join([choice(ascii_letters) for _ in range(10)]),
+                    id="".join([secrets.SystemRandom().choice(ascii_letters) for _ in range(10)]),
                     ack="auto",
                     # These are needed if the subscribe to a durable topic
                     # headers={
