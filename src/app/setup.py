@@ -48,6 +48,7 @@ setup(
         "watchdog>2.1.0",
         "wrapt<1.13.0",
         "yapconf>=1.0.0",
+        "security==1.2.1",
     ],
     classifiers=[
         "Development Status :: 4 - Beta",

@@ -7,6 +7,7 @@ from threading import Thread
 from typing import Sequence
 
 from brewtils.models import Runner
+from security import safe_command
 
 log_levels = [n for n in logging._nameToLevel.keys()]
 
@@ -206,8 +207,7 @@ class ProcessRunner(Thread):
     @staticmethod
     def _get_process(args, env, cwd, capture_streams=False) -> subprocess.Popen:
         # this is factored out of ProcessRunner.run to ease unit testing
-        return subprocess.Popen(
-            args=args,
+        return safe_command.run(subprocess.Popen, args=args,
             env=env,
             cwd=cwd,
             restore_signals=False,

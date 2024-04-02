@@ -8,6 +8,7 @@ import os
 import subprocess
 import sys
 import tarfile
+from security import safe_command
 
 BUILD_IMAGE = "bgio/build"
 NODE_IMAGE = "node:16"
@@ -85,7 +86,7 @@ def build_rpms(version, iteration, cli_dist, cli_python, local, docker_envs):
         + [NODE_IMAGE, "make", "-C", "/src/ui", "deps", "package"]
     )
 
-    subprocess.run(ui_build_cmd).check_returncode()
+    safe_command.run(subprocess.run, ui_build_cmd).check_returncode()
 
     reactui_build_cmd = (
         ["docker", "run", "--rm", "-v", f"{BASE_PATH}/src:/src"]
@@ -94,7 +95,7 @@ def build_rpms(version, iteration, cli_dist, cli_python, local, docker_envs):
         + [NODE_IMAGE, "make", "-C", "/src/react-ui", "deps", "package"]
     )
 
-    subprocess.run(reactui_build_cmd).check_returncode()
+    safe_command.run(subprocess.run, reactui_build_cmd).check_returncode()
 
     for dist in build_dists:
         tag = f"{dist}-python{build_python}"
@@ -128,7 +129,7 @@ def build_rpms(version, iteration, cli_dist, cli_python, local, docker_envs):
         if local:
             cmd.append("--local")
 
-        subprocess.run(cmd).check_returncode()
+        safe_command.run(subprocess.run, cmd).check_returncode()
 
 
 def main():
