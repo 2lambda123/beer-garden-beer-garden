@@ -357,5 +357,5 @@ def _create_role(role):
     try:
         LegacyRole.objects.get(name=role.name)
     except DoesNotExist:
-        logger.warning("Role %s missing, about to create" % role.name)
+        logger.warning("Role %s missing, about to create", role.name)
         role.save()

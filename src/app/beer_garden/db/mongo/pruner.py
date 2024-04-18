@@ -76,9 +76,7 @@ class MongoPruner(StoppableThread):
                     query = query & task["additional_query"]
 
                 self.logger.debug(
-                    "Removing %ss older than %s"
-                    % (task["collection"].__name__, str(delete_older_than))
-                )
+                    "Removing %ss older than %s", task["collection"].__name__, str(delete_older_than))
                 task["collection"].objects(query).no_cache().delete()
 
             if self._cancel_threshold > 0:
