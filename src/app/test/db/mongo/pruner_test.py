@@ -8,6 +8,7 @@ from mongomock.gridfs import enable_gridfs_integration
 
 from beer_garden.db.mongo.models import File, RawFile, Request
 from beer_garden.db.mongo.pruner import MongoPruner
+import math
 
 enable_gridfs_integration()
 
@@ -114,7 +115,7 @@ class TestDetermineTasks(object):
         prune_tasks, run_every = MongoPruner.determine_tasks(**config)
 
         assert len(prune_tasks) == 4
-        assert run_every == 2.5
+        assert math.isclose(run_every, 2.5, rel_tol=1e-09, abs_tol=0.0)
 
         info_task = prune_tasks[0]
         action_task = prune_tasks[1]
@@ -146,14 +147,14 @@ class TestDetermineTasks(object):
 
         prune_tasks, run_every = MongoPruner.determine_tasks(**config)
         assert len(prune_tasks) == 1
-        assert run_every == 0.5
+        assert math.isclose(run_every, 0.5, rel_tol=1e-09, abs_tol=0.0)
 
     def test_setup_pruning_tasks_mixed(self):
         config = {"info": 5, "action": -1}
 
         prune_tasks, run_every = MongoPruner.determine_tasks(**config)
         assert len(prune_tasks) == 1
-        assert run_every == 2.5
+        assert math.isclose(run_every, 2.5, rel_tol=1e-09, abs_tol=0.0)
 
         info_task = prune_tasks[0]
 
