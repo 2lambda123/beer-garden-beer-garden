@@ -11,7 +11,6 @@ from enum import Enum
 from importlib.machinery import SourceFileLoader
 from importlib.util import module_from_spec, spec_from_file_location
 from pathlib import Path
-from random import choice
 from types import ModuleType
 from typing import Any, Dict, Iterable, List, Optional
 
@@ -24,6 +23,7 @@ from beer_garden.errors import PluginValidationError
 from beer_garden.events import publish, publish_event
 from beer_garden.local_plugins.env_help import expand_string
 from beer_garden.local_plugins.runner import ProcessRunner
+import secrets
 
 # This is ... complicated. See the PluginManager docstring
 lpm_proxy = None  # type: Optional[PluginManager]
@@ -523,7 +523,7 @@ class PluginManager(StoppableThread):
         """
 
         def _runner_id():
-            return "".join([choice(string.ascii_letters) for _ in range(10)])
+            return "".join([secrets.SystemRandom().choice(string.ascii_letters) for _ in range(10)])
 
         seen = set()
 
