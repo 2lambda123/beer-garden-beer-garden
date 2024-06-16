@@ -105,7 +105,7 @@ def user_has_permission_for_object(
     Raises:
         TypeError: The provided object is of an unsupported type
     """
-    if not (isinstance(obj, Document) or isinstance(obj, BrewtilsModel)):
+    if not isinstance(obj, (Document, BrewtilsModel)):
         raise TypeError("obj must be of a type derived from Document or BrewtilsModel")
 
     if permission in user.global_permissions or _user_has_object_owner_permission(
