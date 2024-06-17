@@ -123,7 +123,7 @@ class TestProgressiveBackoff(object):
         monkeypatch.setattr(app, "wait", wait_mock)
 
         app._progressive_backoff(func_mock, "test_func")
-        max_val = max([mock_call[0][0] for mock_call in wait_mock.call_args_list])
+        max_val = max(mock_call[0][0] for mock_call in wait_mock.call_args_list)
         assert max_val == 30
 
 
