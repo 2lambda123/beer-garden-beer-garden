@@ -239,11 +239,8 @@ class TestBadPlugin:
 
         assert runner.dead
         assert any(
-            [
-                "terminated before successfully initializing" in msg
-                for msg in caplog.messages
-            ]
-        )
+            "terminated before successfully initializing" in msg
+                for msg in caplog.messages)
 
     def test_exception_thrown_in_plugin(self, caplog, monkeypatch, runner):
         def mock_get_process(*args, **kwargs):
@@ -259,4 +256,4 @@ class TestBadPlugin:
             runner.run()
 
         assert runner.dead
-        assert any(["died" in msg for msg in caplog.messages])
+        assert any("died" in msg for msg in caplog.messages)
